@@ -9,6 +9,7 @@ interface PricingTier {
 const BASE_FEE = 150;
 const IMPLEMENTATION_FEE_SELF = 1500;
 const IMPLEMENTATION_FEE_ASSISTED = 3500;
+const MININIMUM_USERS = 100;
 const pricingTiers: PricingTier[] = [
   { maxUsers: 500, pricePerUser: 1.41 },
   { maxUsers: 1000, pricePerUser: 1.06 },
@@ -16,7 +17,7 @@ const pricingTiers: PricingTier[] = [
 ];
 
 const PricingCalculator: React.FC = () => {
-  const [users, setUsers] = useState<number>(1);
+  const [users, setUsers] = useState<number>(MININIMUM_USERS);
   const [isSelfImplementation, setIsSelfImplementation] = useState<boolean>(false);
   const [monthlyPrice, setMonthlyPrice] = useState<number>(BASE_FEE);
   const [implementationFee, setImplementationFee] = useState<number>(IMPLEMENTATION_FEE_ASSISTED);
@@ -38,8 +39,9 @@ const PricingCalculator: React.FC = () => {
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
-    setUsers(isNaN(value) ? 1 : Math.max(1, value));
+    setUsers(isNaN(value) ? MININIMUM_USERS : Math.max(MININIMUM_USERS, value));
   };
+  
 
   const handleImplementationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSelfImplementation(e.target.checked);
