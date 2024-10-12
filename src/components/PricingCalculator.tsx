@@ -74,7 +74,7 @@ const PricingCalculator: React.FC = () => {
             onChange={handleImplementationChange}
             className="mr-2 accent-[#fe904d]"
           />
-          <span className="text-sm font-medium text-gray-700">Zelf-implementatie</span>
+          <span className="text-sm font-medium text-gray-700">Zelf-implementeren</span>
         </label>
       </div>
       <div className="mb-6">
@@ -93,7 +93,7 @@ const PricingCalculator: React.FC = () => {
       </div>
       <div className="text-sm text-gray-600">
         <p className="flex items-center mb-1">
-          <span className="font-semibold mr-1">Basiskosten:</span>
+          <span className="font-semibold mr-1">Basis service kosten:</span>
           <Euro className="mr-1 h-4 w-4" />
           {BASE_FEE}/maand
         </p>
