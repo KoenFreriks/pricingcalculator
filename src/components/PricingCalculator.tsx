@@ -104,6 +104,10 @@ const PricingCalculator: React.FC = () => {
           <li>Eerste 500 gebruikers: €1,41 per gebruiker/maand</li>
           <li>Volgende 500 gebruikers: €1,06 per gebruiker/maand</li>
           <li>Extra gebruikers: €0,79 per gebruiker/maand</li>
+          <p> 
+          Minimale afname van 100 gebruikers
+          </p>
+          
         </ul>
       </div>
     </div>
