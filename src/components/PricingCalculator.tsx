@@ -17,14 +17,17 @@ const pricingTiers: PricingTier[] = [
 ];
 
 const PricingCalculator: React.FC = () => {
+  const [userInput, setUserInput] = useState<string>('');  // Allow empty input as a string
   const [users, setUsers] = useState<number>(MININIMUM_USERS);
   const [isSelfImplementation, setIsSelfImplementation] = useState<boolean>(false);
   const [monthlyPrice, setMonthlyPrice] = useState<number>(BASE_FEE);
   const [implementationFee, setImplementationFee] = useState<number>(IMPLEMENTATION_FEE_ASSISTED);
 
   useEffect(() => {
+    // Use minimum users if the input is empty or invalid
+    const userCount = userInput === '' ? MININIMUM_USERS : Math.max(parseInt(userInput, 10) || MININIMUM_USERS, MININIMUM_USERS);
     let price = BASE_FEE;
-    let remainingUsers = users;
+    let remainingUsers = userCount;
 
     for (const tier of pricingTiers) {
       const usersInTier = Math.min(remainingUsers, tier.maxUsers - (tier === pricingTiers[0] ? 0 : pricingTiers[pricingTiers.indexOf(tier) - 1].maxUsers));
@@ -33,15 +36,14 @@ const PricingCalculator: React.FC = () => {
       if (remainingUsers <= 0) break;
     }
 
+    setUsers(userCount);
     setMonthlyPrice(price);
     setImplementationFee(isSelfImplementation ? IMPLEMENTATION_FEE_SELF : IMPLEMENTATION_FEE_ASSISTED);
-  }, [users, isSelfImplementation]);
+  }, [userInput, isSelfImplementation]);
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    setUsers(isNaN(value) ? MININIMUM_USERS : Math.max(MININIMUM_USERS, value));
+    setUserInput(e.target.value);  // Allow the input to be empty
   };
-  
 
   const handleImplementationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSelfImplementation(e.target.checked);
@@ -59,7 +61,7 @@ const PricingCalculator: React.FC = () => {
           <input
             type="number"
             id="users"
-            value={users}
+            value={userInput}
             onChange={handleUserChange}
             min="1"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#fe904d]"
